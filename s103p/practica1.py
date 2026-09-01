@@ -406,6 +406,7 @@ seaborn.lineplot(
     x=zp,
     y=zp,
     ax=axes,
+    color="red"
 )
 pyplot.title("z vs y1")
 pyplot.xlabel("z = X • betas")
@@ -429,7 +430,7 @@ for epoca in range(1000):
     print(epoca, L)
 
     # --- GRÁFICA DE z vs y1 POR ÉPOCA
-    if epoca % 100 == 0:
+    if epoca % 10 == 0:
         Xp = numpy.array([
             numpy.ones(20),
             numpy.linspace(0, 80, 20)
@@ -446,12 +447,15 @@ for epoca in range(1000):
             x=zp,
             y=zp,
             ax=axes,
+            color="red"
         )
         pyplot.title("z vs y1")
         pyplot.xlabel("z = X • betas")
         pyplot.ylabel("Nivel de estrés")
+        pyplot.xlim((z.min() - 1, z.max() + 1))
+        pyplot.ylim((y1.min() - 1, y1.max() + 1))
 
-        figure.savefig(f"z_vs_y1_epoca_{epoca}.png", dpi=300)
+        figure.savefig(f"z_vs_y1_epoca_{epoca:03d}.png", dpi=300)
 
     # --- TERMINA LA GRÁFICA ---
 
