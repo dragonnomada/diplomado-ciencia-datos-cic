@@ -78,3 +78,61 @@ pyplot.savefig("s202/graficas/x2_vs_y.png", dpi=300)
 
 # Perceptrón: betas*
 
+import pandas
+
+# b0, b1, b2
+betas = numpy.array([1, 1, 1]) # numpy.random.normal(0, 1, 3) - normal(mu, sigma, p)
+
+n = 14 # len(x1) | len(x2) | len(y)
+
+perdidas = []
+
+for t in range(2000):
+    z = numpy.zeros(n)
+    yp = numpy.zeros(n)
+
+    for i in range(0, n):
+        xi = numpy.array([1, x1[i], x2[i]]) # Vector de diseño que considera la b0 | bias
+        # b0 = betas[0]
+        # b1 = betas[1]
+        # b2 = betas[2]
+        # z = b0 + b1 * x1[i] + b2 * x2[i]
+        z[i] = xi.dot(betas) # (1, x1_i, x2_i) • (betas_0, betas_1, betas_2)
+                        # (1, 18, 45) • (0.1, -0.1, 0.2)
+        yp[i] = z[i] # yp = z
+
+    e = y - yp
+    l = (1 / 2) * e ** 2
+
+    # print(
+    #     pandas.DataFrame({
+    #         "x1": x1,
+    #         "x2": x2,
+    #         "y": y,
+    #         "z": z,
+    #         "yp": yp,
+    #         "e": e,
+    #         "L": l,
+    #     })
+    # )
+
+    L = l.sum()
+
+    print("betas", betas)
+    print(f"L={L}")
+    print("-" * 20)
+
+    betas = betas + (0.00001) * e.dot(numpy.array([numpy.ones(n), x1, x2]).T)
+
+    print("betas*", betas)
+    print("=" * 20)
+
+    perdidas.append((t, L))
+
+Vt, VL = zip(*perdidas)
+
+pyplot.clf()
+seaborn.lineplot(x=Vt, y=numpy.log(VL))
+pyplot.savefig("s202/graficas/perdida_tiempo.png", dpi=300)
+
+# GRID SEARCH -> Buscar hiperparámetros (tasa, épocas, lotes, ...)
