@@ -1,0 +1,10 @@
+numpy
+pandas
+matplotlib
+seaborn
+tensorflow
+keras==3.15.1
+
+# python -m venv env-dl
+# source env-dl/bin/activate
+# pip install -r requirements.txt
