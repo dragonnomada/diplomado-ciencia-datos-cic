@@ -1,0 +1,93 @@
+Entradas: (características de entrada / predictivas)
+
+Titanic
+12 - Características
+
+Estudiantes
+24 - Características
+
+Casas
+58 - Características
+
+Imágenes (28x28)
+784 - Características
+
+Imágenes (64x64)
+4096 - Características
+
+Textos - (Embedding 8 plano con Sentencias de 30 tokens)
+240 - Características
+
+Textos - (Embedding 8 promedio con Sentencias de 30 tokens)
+8 - Características
+
+-----
+
+1. No usar menos neuronas que las entradas, porque la información colapsa, a menos que sea un embudo dirigido a la salida
+2. No usar más neuronas que la capa anterior, porque la información no crece
+3. Una capa de muchas neuronas no es lo mismo a muchas capas de pocas neuronas, porque la información profunda es más fuerte que una información aislada
+4. A mayor profundidad mayor dificultad de ajustar el aprendizaje, porque ajustar pesos profundos implica desvanecer el error (explosión del gradiente o desvanecimiento del gradiente)
+5. Por cada neurona se requieren más observaciones (cientos o miles) y por cada profundidad más épocas de refuerzo
+
+12 inputs -> 
+
+[SI] 12->6->1 # Pocos datos
+[NO] 12->6->10 ! La información ya colapsó, no crece
+[NO] 12->2->3->1 ! La información ya colapsó, no crece
+[SI] 12->3->2->1 # Muchos datos
+[SI] 12->3->3->1 # Muchas datos y épocas
+[SI] 12->2->2->1 # Balanceado
+
+784 inputs ->
+
+Arquitecturas modelo
+
+Pocos datos y épocas
+
+1 neurona (por salida) Modelo lineal/logístico (% aprender)
+
+1 capa oculta (mismas neuronas por entrada) (% aprender)
+
+1 capa oculta (el doble neuronas por entrada) (% aprender)
+
+Muchos datos y épocas
+
+* Anteriores, más
+
+2 capas ocultas (2x2, 4x4, 8x8, <16x16, 32x32>, ...) uniformes (% aprender)
+2 capas ocultas (2x1, 4x2, 8x4, 16x8, 32x16, ...) embudo simple (% aprender)
+4 capas ocultas (8x8x4x4, 128x64x64x64, ...) filtros (% aprender)
+
+784 inputs - 1
+784 inputs - 128
+784 inputs - 128x64x16
+
+4096 inputs - 1
+4096 inputs - 1024
+4096 inputs - 1024x256x32
+
+Evaluaciones
+
+5 semillas aleatorias
+
+X1, X2, ..., X5
+Y1, Y2, ..., Y5
+
+s1, s2, ..., s5
+
+Por cada arquitectura de nn
+
+X1, Y1 -> nn1.1, n1.2, ..., n1.10
+X2, Y2 -> nn2.1, n2.2, ..., n2.10
+...
+X5, Y5 -> nn5.1, n5.2, ..., n5.10
+
+(% aprendizaje promedio n1.1, ..., n1.10)
+(% aprendizaje promedio n2.1, ..., n2.10)
+...
+(% aprendizaje promedio n5.1, ..., n5.10)
+
+(% aprendizaje y estabilidad global en una red neuronal entrenada 
+con datos muestrados aleatoriamente y en diferentes entrenamientos)
+
+> Cross Validation
